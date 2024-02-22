@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
-const port = 6000;
+const port = 5001;
 const mongoose = require("mongoose");
 const mongoUrl = require("./keys");
+const cors = require("cors");
+
 app.use(express.json());
 require("./models/models.js");
+app.use(cors());
 app.use(require("./routes/auth.js"));
 
 mongoose.connect(mongoUrl);

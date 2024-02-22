@@ -13,7 +13,7 @@ router.post("/signup",(req,res)=>{
 
     if(!name || !username || !email || !password)
     {
-        res.status(422).json({error : "Please fill all the details"})
+        return res.status(422).json({error : "Please fill all the details"})
     }
     User.findOne({$or:[{email:email},{username:username}]}).then((savedUser)=>{
         if(savedUser)
@@ -30,7 +30,7 @@ router.post("/signup",(req,res)=>{
             })
             
             user.save()
-            .then(user => {res.json("Message saved successfully")})
+            .then(user => {res.json({message : "Registered successfully"})})
             .catch(err=>{console.log(err)});
 
         })
