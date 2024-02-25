@@ -14,7 +14,22 @@ const Signup = () => {
 
     const notifyA = (err)=> toast.error(err);
     const notifyB = (suc)=> toast.success(suc);
+
+    const regexEmail =/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+
     const postData = ()=>{
+        if(!regexEmail.test(email))
+        {
+            notifyA("Invalid email");
+            return;
+        }
+        else if(!regexPass.test(password))
+        {
+            notifyA("Password must contain eight characters, at least one letter, one number and one special character");
+            return;
+        }
+
         fetch("http://localhost:5001/signup",{
             method:"post",
             headers:{
@@ -57,7 +72,7 @@ const Signup = () => {
                     <input type="text" name="username" placeholder="Username" value={username} className="input" onChange={(event)=>{
                         setUsername(event.target.value);
                     }}/>
-                    <input type="password" name="password" autoComplete="off" placeholder="Password" value={password} className="input" onChange={(event)=>{
+                    <input type="password" name="password" autoComplete="on" placeholder="Password" value={password} className="input" onChange={(event)=>{
                         setPassword(event.target.value);
                     }}/>
                     <p className="terms">
